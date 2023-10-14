@@ -19,6 +19,7 @@ const theme: ITheme = {
         button: '#3D5CFF',
         input: '#3E3E55',
         texto1: '#858597',
+
     },
     fonts: {
         regular: 'Poppins-Regular',

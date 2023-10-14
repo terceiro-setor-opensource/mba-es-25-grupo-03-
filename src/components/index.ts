@@ -5,3 +5,5 @@ export * from './Input';
 export * from './Loading';
 export * from './Typography';
 export * from './Button';
+export * from './Header';
+export * from './MessageDialog';
