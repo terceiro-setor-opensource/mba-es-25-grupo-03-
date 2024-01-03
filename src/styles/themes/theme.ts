@@ -19,6 +19,9 @@ const theme: ITheme = {
         button: '#3D5CFF',
         input: '#3E3E55',
         texto1: '#858597',
+        branco: '#FFFFFF',
+        cinzaCard: '#2F2F42',
+        cinza5: '#C4C4C4',
 
     },
     fonts: {

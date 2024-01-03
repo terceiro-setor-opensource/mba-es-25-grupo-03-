@@ -17,6 +17,9 @@ export interface ITheme {
         button: string;
         input: string;
         texto1: string;
+        branco: string;
+        cinzaCard: string;
+        cinza5: string;
     };
     fonts: {
         regular: string;
