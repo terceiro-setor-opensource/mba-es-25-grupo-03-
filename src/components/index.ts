@@ -8,3 +8,4 @@ export * from './Button';
 export * from './Header';
 export * from './MessageDialog';
 export * from './InputSearch';
+export * from './Tabs';
