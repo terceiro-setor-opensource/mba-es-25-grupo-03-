@@ -20,6 +20,7 @@ export interface ITheme {
         branco: string;
         cinzaCard: string;
         cinza5: string;
+        laranja: string;
     };
     fonts: {
         regular: string;

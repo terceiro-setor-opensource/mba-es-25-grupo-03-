@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components/native';
 import { Text } from 'react-native';
 
 export const Container = styled.View`
-	/* flex: 1; */
 	padding: 0 10px;
     background: ${({ theme }) => theme.colors.appBackground};
 `;
@@ -35,57 +34,6 @@ export const ItemCurso = styled.TouchableOpacity<ItemCursoProps>`
 	margin-top: 20px;
 	justify-content: center;
 `;
-
-export const RowFlatList = styled.View`
-	flex-direction: row;
-	margin: 0 10px;
-`;
-
-export const ItemCursoVertical = styled.TouchableOpacity<ItemCursoProps>`
-	padding: 5px;
-	background-color: ${props => props.color ? props.color : props.theme.colors.cinzaCard};
-	height: 120px;
-	border-radius: 15px;
-	margin: 10px;
-	margin-top: 10px;
-	
-`;
-
-export const ItemCursoVerticalInside = styled.View<ItemCursoProps>`
-	background-color: ${props => props.color ? props.color : props.theme.colors.cinza5};
-	height: 90px;
-	width: 90px;
-	border-radius: 10px;
-	margin: 10px;
-	margin-top: 10px;
-`;
-
-export const TextCursoVerticalInside = styled(Text)`
-    color: ${({ theme }) => theme.colors.light};
-	font-family: ${({ theme }) => theme.fonts.bold};
-	font-size: 14px;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	align-self: center;
-	margin-bottom: 60px;
-	margin-left: 40px;
-`;
-
-export const TextHorasVerticalInside = styled(Text)`
-    color: ${({ theme }) => theme.colors.light};
-	font-family: ${({ theme }) => theme.fonts.bold};
-	font-size: 12px;
-	/* flex-direction: column; */
-	/* justify-content: center; */
-	align-items: center;
-	align-self: center;
-	margin-top: 70px;
-	margin-left: 30px;
-`;
-
-
-
 
 export const TextCurso = styled(Text)`
     color: ${({ theme }) => theme.colors.light};
@@ -130,9 +78,13 @@ export const CursosOpcoesText = styled.Text<CursoOpcoesProps>`
 
 export const ContainerCursosOpcoes = styled.View`
 	margin: 15px 0;
-	/* flex: 1; */
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
 `;
+
+
+
+
+
 

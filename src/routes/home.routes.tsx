@@ -26,7 +26,7 @@ function TabRoutes() {
         tabBarInactiveTintColor: colors.cinza2,
         tabBarHideOnKeyboard: true,
 
-        tabBarLabelPosition: 'beside-icon',
+        /*  tabBarLabelPosition: 'beside-icon', */
         tabBarStyle: {
           backgroundColor: colors.appBackground,
           height: Platform.OS === 'ios' ? 100 : 60,
@@ -37,7 +37,7 @@ function TabRoutes() {
         name="Home"
         component={Home}
         options={{
-          title: '',
+          title: 'Home',
           tabBarIcon: ({color, focused}) => (
             <Icon name="house" size={focused ? 30 : 20} color={color} />
           ),
@@ -48,7 +48,7 @@ function TabRoutes() {
         name="Cursos"
         component={Cursos}
         options={{
-          title: '',
+          title: 'Curso',
           tabBarIcon: ({color, focused}) => (
             <Icon name="book" size={focused ? 30 : 20} color={color} />
           ),
@@ -59,7 +59,7 @@ function TabRoutes() {
         name="Notificações"
         component={Notificacoes}
         options={{
-          title: '',
+          title: 'Mensagem',
           tabBarIcon: ({color, focused}) => (
             <Icon
               name="sms"
@@ -74,7 +74,7 @@ function TabRoutes() {
         name="Conta"
         component={Conta}
         options={{
-          title: '',
+          title: 'Conta',
           tabBarIcon: ({color, focused}) => (
             <Icon
               name="account-circle"

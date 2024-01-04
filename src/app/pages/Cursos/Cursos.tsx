@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
-import {AreaView, Header, TextInputSearch} from '~/components';
+import {AreaView, Header, TextInputSearch, Icon} from '~/components';
+import {CardCursos} from './Components';
 import {
   Container,
   ContainerScroll,
@@ -8,12 +9,7 @@ import {
   CursosOpcoes,
   ContainerCursosOpcoes,
   CursosOpcoesText,
-  ItemCursoVertical,
   ContainerScrollBottom,
-  ItemCursoVerticalInside,
-  TextCursoVerticalInside,
-  RowFlatList,
-  TextHorasVerticalInside,
 } from './styles';
 import {FlatList} from 'react-native-gesture-handler';
 
@@ -59,22 +55,30 @@ export function Cursos() {
       id: 1,
       item: 'Orientação a objetos C#',
       color: '#CEECFE',
+      totalHoras: 10,
+      professor: 'João Lopes',
     },
     {
       id: 2,
       item: 'SQL Avançado',
       color: '#EFE0FF',
+      totalHoras: 20,
+      professor: 'Leticia Corvalan',
     },
     {
       id: 3,
       item: 'DBA Oracle',
       color: '#CEECFE',
+      totalHoras: 30,
+      professor: 'Leonardo Lima',
     },
 
     {
       id: 4,
       item: 'Reflection com C#',
       color: '#EFE0FF',
+      totalHoras: 40,
+      professor: 'Rafael Silva',
     },
   ];
 
@@ -120,22 +124,7 @@ export function Cursos() {
           </ContainerCursosOpcoes>
         </Container>
         <ContainerScrollBottom>
-          <FlatList
-            data={array}
-            keyExtractor={item => String(item.id)}
-            renderItem={({item}) => (
-              <>
-                <ItemCursoVertical>
-                  <RowFlatList>
-                    <ItemCursoVerticalInside></ItemCursoVerticalInside>
-                    <TextCursoVerticalInside>
-                      {item.item}
-                    </TextCursoVerticalInside>
-                  </RowFlatList>
-                </ItemCursoVertical>
-              </>
-            )}
-          />
+          <CardCursos listDados={array} />
         </ContainerScrollBottom>
       </AreaView>
     </>

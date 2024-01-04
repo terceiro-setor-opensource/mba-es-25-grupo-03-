@@ -18,7 +18,6 @@ export function useMessageDialog() {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        console.log('teste')
         function handleAddMessage(newMessage: IMessage) {
             setMessage(newMessage);
             setIsVisible(true);
