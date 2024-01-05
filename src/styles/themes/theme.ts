@@ -22,7 +22,8 @@ const theme: ITheme = {
         branco: '#FFFFFF',
         cinzaCard: '#2F2F42',
         cinza5: '#C4C4C4',
-        laranja: '#FF6905'
+        laranja: '#FF6905',
+        azulCiano: '#D8FFEF',
 
     },
     fonts: {

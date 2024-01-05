@@ -21,6 +21,7 @@ export interface ITheme {
         cinzaCard: string;
         cinza5: string;
         laranja: string;
+        azulCiano: string;
     };
     fonts: {
         regular: string;
