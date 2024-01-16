@@ -23,7 +23,6 @@ interface ItemCursoProps {
 }
 
 export const ItemCurso = styled.TouchableOpacity<ItemCursoProps>`
-	border: 1px solid ${props => props.theme.colors.secundary};
 	padding: 5px;
 	background-color: ${props => props.color ? props.color : ''};
 	height: 120px;
