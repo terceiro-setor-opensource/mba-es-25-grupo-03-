@@ -6,5 +6,5 @@ import {HomeRoutes} from './home.routes';
 export function Routes() {
   const {usuario} = useAuth();
 
-  return usuario ? <HomeRoutes /> : <AuthRoutes />;
+  return usuario && usuario.email ? <HomeRoutes /> : <AuthRoutes />;
 }

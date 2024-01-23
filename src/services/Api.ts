@@ -1,7 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 
-export interface Response extends AxiosResponse {}
+export interface Response extends AxiosResponse { }
 
+
+export const setBaseAdress = () => {
+	axios.defaults.baseURL = "https://impacta03.autowaresolucoes.com.br";
+}
 
 export const getAPI = (url: string, extraparam?: any): Promise<Response> =>
 	new Promise((resolve, reject) => {

@@ -5,10 +5,13 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
+import {IUsuario} from '~/interfaces/IUsuario';
+import {setToken, removeToken} from '~/utils';
 
 interface AuthContextProps {
-  onAddAuth: () => Promise<void>;
-  usuario: boolean;
+  onAddAuth: (usuario: IUsuario, acessToken: string) => Promise<void>;
+  onLogout: () => Promise<void>;
+  usuario: IUsuario;
 }
 
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
@@ -24,19 +27,29 @@ interface AuthProps {
 }
 
 export function AuthProvider({children}: AuthProps) {
-  const [usuario, setUsuario] = useState<boolean>(false);
+  const [usuario, setUsuario] = useState<IUsuario>({} as IUsuario);
 
-  const onAddAuth = useCallback((): Promise<void> => {
-    setUsuario(true);
+  const onAddAuth = useCallback(
+    async (usuario: IUsuario, acessToken: string): Promise<void> => {
+      setUsuario(usuario);
+
+      await setToken(acessToken);
+    },
+    [],
+  );
+
+  const onLogout = useCallback(async (): Promise<void> => {
+    await removeToken();
+    setUsuario({} as IUsuario);
   }, []);
 
   const valueContext = useMemo(() => {
     return {
       onAddAuth,
-
+      onLogout,
       usuario,
     };
-  }, [onAddAuth, usuario]);
+  }, [onAddAuth, usuario, onLogout]);
 
   return (
     <AuthContext.Provider value={valueContext}>{children}</AuthContext.Provider>

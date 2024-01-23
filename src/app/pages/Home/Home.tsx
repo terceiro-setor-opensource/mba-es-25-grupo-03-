@@ -22,9 +22,12 @@ import {
   TextFind,
 } from './styles';
 import {FlatList} from 'react-native-gesture-handler';
+import {useAuth} from '~/app/hooks';
 
 export function Home() {
   const [arrayTextCursos, setArrayTextCursos] = useState<any[]>([]);
+  const {usuario} = useAuth();
+
   useEffect(() => {
     const arrayCursoText = [
       {
@@ -72,7 +75,7 @@ export function Home() {
       <AreaView>
         <ContainerHeader>
           <ContainerTexto>
-            <TitleName>Olá, Leonardo</TitleName>
+            <TitleName>Olá, {usuario.name}</TitleName>
             <SubTitleName>vamos começar a aprender</SubTitleName>
           </ContainerTexto>
         </ContainerHeader>
