@@ -17,7 +17,7 @@ import {Loading} from '~/components';
 export function Mensagens() {
   const [array, setArray] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  console.log('passei');
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);

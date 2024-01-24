@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
+import { getAccessToken } from '~/utils';
 
 export interface Response extends AxiosResponse { }
+
 
 
 export const setBaseAdress = () => {
@@ -8,9 +10,9 @@ export const setBaseAdress = () => {
 }
 
 export const getAPI = (url: string, extraparam?: any): Promise<Response> =>
-	new Promise((resolve, reject) => {
+	new Promise(async (resolve, reject) => {
 		axios
-			.get(url, { ...(extraparam || {}) })
+			.get(url, { ...(extraparam || {}), headers: { Authorization: `Bearer ${await getAccessToken()}` } })
 			.then((response: Response) => {
 				if (response) {
 					resolve(response);
@@ -21,10 +23,13 @@ export const getAPI = (url: string, extraparam?: any): Promise<Response> =>
 			.catch((error: unknown) => reject(error));
 	});
 
+
+export const initApi = () => setBaseAdress();
+
 export const postAPI = (url: string, data?: any, extraparam?: any): Promise<Response> => {
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
 		axios
-			.post(url, data, { ...(extraparam || {}) })
+			.post(url, data, { ...(extraparam || {}), headers: { Authorization: `Bearer ${await getAccessToken()}` } })
 			.then((response: Response) => {
 				if (response) {
 					resolve(response);
@@ -32,15 +37,18 @@ export const postAPI = (url: string, data?: any, extraparam?: any): Promise<Resp
 					reject();
 				}
 			})
-			.catch((error: unknown) => reject(error));
+			.catch((error: unknown) => {
+				reject(error);
+
+			});
 	});
 };
 
 
 export const putAPI = (url: string, data: any, extraparam?: any): Promise<Response> =>
-	new Promise((resolve, reject) => {
+	new Promise(async (resolve, reject) => {
 		axios
-			.put(url, data, { ...(extraparam || {}) })
+			.put(url, data, { ...(extraparam || {}), headers: { Authorization: `Bearer ${await getAccessToken()}` } })
 			.then((response: Response) => {
 				if (response) {
 					resolve(response);
@@ -52,9 +60,9 @@ export const putAPI = (url: string, data: any, extraparam?: any): Promise<Respon
 	});
 
 export const deleteAPI = (url: string, extraparam?: any): Promise<Response> =>
-	new Promise((resolve, reject) => {
+	new Promise(async (resolve, reject) => {
 		axios
-			.delete(url, { ...(extraparam || {}) })
+			.delete(url, { ...(extraparam || {}), headers: { Authorization: `Bearer ${await getAccessToken()}` } })
 			.then((response: Response) => {
 				if (response) {
 					resolve(response);
@@ -64,3 +72,6 @@ export const deleteAPI = (url: string, extraparam?: any): Promise<Response> =>
 			})
 			.catch((error: unknown) => reject(error));
 	});
+
+
+

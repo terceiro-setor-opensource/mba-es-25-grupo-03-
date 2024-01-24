@@ -1,5 +1,5 @@
-import {useState, useEffect} from 'react';
-import {AreaView, Header, TextInputSearch, Icon} from '~/components';
+import {useState, useEffect, useCallback} from 'react';
+import {AreaView, Header, TextInputSearch} from '~/components';
 import {CardCursos} from './Components';
 import {
   Container,
@@ -12,34 +12,59 @@ import {
   ContainerScrollBottom,
 } from './styles';
 import {FlatList} from 'react-native-gesture-handler';
+import CursoService from '~/services/Curso/CursoService';
+import {ICurso} from '~/interfaces';
+import {Loading} from '~/components';
+import {useFocusEffect} from '@react-navigation/native';
 
 export function Cursos() {
   const [arrayTextCursos, setArrayTextCursos] = useState<any[]>([]);
+  const [cursos, setCursos] = useState<ICurso[]>([]);
+  const [efetuaBusca, setEfetuaBusca] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      setLoading(true);
+
+      CursoService.getCursos()
+        .then(response => {
+          setCursos(response);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, []),
+  );
 
   useEffect(() => {
-    const arrayCursoText = [
-      {
-        id: 1,
-        item: 'Todos',
-        color: '#CEECFE',
-        selected: true,
-      },
-      {
-        id: 2,
-        item: 'Popular',
-        color: '#EFE0FF',
-        selected: false,
-      },
-      {
-        id: 3,
-        item: 'Novos',
-        color: '#CEECFE',
-        selected: false,
-      },
-    ];
+    if (efetuaBusca) {
+      setEfetuaBusca(false);
 
-    setArrayTextCursos(arrayCursoText);
-  }, []);
+      const arrayCursoText = [
+        {
+          id: 1,
+          item: 'Todos',
+          color: '#CEECFE',
+          selected: true,
+        },
+        {
+          id: 2,
+          item: 'Popular',
+          color: '#EFE0FF',
+          selected: false,
+        },
+        {
+          id: 3,
+          item: 'Novos',
+          color: '#CEECFE',
+          selected: false,
+        },
+      ];
+
+      setArrayTextCursos(arrayCursoText);
+    }
+  }, [efetuaBusca]);
 
   function onChangeFilter(id: number) {
     setArrayTextCursos((prevState: any) => {
@@ -49,6 +74,8 @@ export function Cursos() {
       }));
     });
   }
+
+  console.log('[cursos]', cursos);
 
   const array = [
     {
@@ -124,7 +151,11 @@ export function Cursos() {
           </ContainerCursosOpcoes>
         </Container>
         <ContainerScrollBottom>
-          <CardCursos listDados={array} />
+          {loading ? (
+            <Loading size="large" />
+          ) : (
+            <CardCursos listCursos={cursos} />
+          )}
         </ContainerScrollBottom>
       </AreaView>
     </>

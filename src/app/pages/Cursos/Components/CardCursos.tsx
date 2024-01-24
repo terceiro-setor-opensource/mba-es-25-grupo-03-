@@ -9,28 +9,41 @@ import {
   IconeProfessor,
   ContainerProfessor,
   TextProfessor,
+  ImageAvatar,
 } from './styles';
+import {ICurso} from '~/interfaces';
+import {Image} from 'react-native';
 
-function CardCursos({listDados}: any) {
+interface ICardCursosProps {
+  listCursos: ICurso[];
+}
+
+function CardCursos({listCursos}: ICardCursosProps) {
   return (
     <FlatList
-      data={listDados}
+      data={listCursos}
       keyExtractor={item => String(item.id)}
       renderItem={({item}) => (
         <>
           <ItemCursoVertical>
             <RowFlatList>
-              <ItemCursoVerticalInside></ItemCursoVerticalInside>
+              <ItemCursoVerticalInside>
+                {/*    <ImageAvatar
+                  source={{uri: `data:image/png:base64, ${item.avatar}`}}
+                /> */}
+              </ItemCursoVerticalInside>
               <ContainerCard>
-                <TextCursoVerticalInside>{item.item}</TextCursoVerticalInside>
+                <TextCursoVerticalInside>
+                  {item.descricao}
+                </TextCursoVerticalInside>
                 <ContainerCard>
                   <ContainerProfessor>
                     <IconeProfessor name="person" size={20} />
-                    <TextProfessor>{item.professor}</TextProfessor>
+                    <TextProfessor>{item.usuario.nome}</TextProfessor>
                   </ContainerProfessor>
                 </ContainerCard>
                 <TextHorasVerticalInside>
-                  {`${item.totalHoras} horas`}
+                  {`${item.duracaoMinutos} horas`}
                 </TextHorasVerticalInside>
               </ContainerCard>
             </RowFlatList>

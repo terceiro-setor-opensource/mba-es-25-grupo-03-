@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components/native';
-import { Text } from 'react-native';
+import { Text, Image } from 'react-native';
 import { Icon } from '~/components';
 
 interface ItemCursoProps {
-    color?: string;
+	color?: string;
 }
 
 export const ItemCursoVertical = styled.TouchableOpacity<ItemCursoProps>`
@@ -69,4 +69,10 @@ export const TextProfessor = styled.Text`
 	color: ${({ theme }) => theme.colors.cinza5};
 	font-family: ${({ theme }) => theme.fonts.bold};
 	font-size: 14px;
+`;
+
+export const ImageAvatar = styled.Image`
+	width: 200px;
+    height: 200px;
+    resize: horizontal;
 `;

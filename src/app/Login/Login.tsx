@@ -1,4 +1,4 @@
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import {AreaView} from '~/components';
 import {
   Container,
@@ -10,11 +10,12 @@ import {
 } from './styles';
 import {useAuth} from '~/app/hooks';
 import {showMessage} from '~/utils/message';
-import {validarEmail} from '~/utils';
+import {validarEmail, removeToken} from '~/utils';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {setBaseAdress, postAPI} from '~/services';
 import jwtDecode from 'jwt-decode';
 import {IUsuario} from '~/interfaces/IUsuario';
+import {initApi} from '~/services';
 
 interface ILogin {
   email: string;
@@ -33,6 +34,11 @@ export function Login() {
   function onChangeForm(field: string, value: string) {
     setDadosLogin((prevState: any) => ({...(prevState || {}), [field]: value}));
   }
+
+  useEffect(() => {
+    initApi();
+    removeToken();
+  }, []);
 
   function validaCamposObrigatorios() {
     if (
@@ -102,7 +108,6 @@ export function Login() {
         }
       })
       .catch(err => {
-        console.log('error', err);
         showMessage({
           type: 'warning',
           description:
@@ -151,6 +156,7 @@ export function Login() {
             returnKeyType="next"
             rightIcon={hidePassword ? 'visibility' : 'visibility-off'}
             onPressRightIcon={() => setHidePassword(!hidePassword)}
+            editable={!loading}
             value={dadosLogin.senha}
             onChangeText={text => onChangeForm('senha', text)}
             onBlur={() => onBlurInput()}
