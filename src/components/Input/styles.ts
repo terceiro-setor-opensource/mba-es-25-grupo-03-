@@ -62,7 +62,7 @@ export const Required = styled(Typography).attrs({
 
 export const FieldIcon = styled(Icon) <ContainerProps>`
 	margin-right: 5px;
-	color: ${({ isFocused, theme }) => (isFocused ? theme.colors.secundary : theme.colors.text)};
+	color: ${({ isFocused, theme }) => (isFocused ? theme.colors.secundary : theme.colors.cinza3)};
 `;
 
 export const Button = styled(IconButton)`
@@ -70,7 +70,7 @@ export const Button = styled(IconButton)`
 `;
 
 export const TInput = styled.TextInput.attrs(({ theme }) => ({
-	placeholderTextColor: theme.colors.text,
+	placeholderTextColor: theme.colors.cinza3,
 })) <TextInputProps>`
 	flex: 1;
 	width: 100%;

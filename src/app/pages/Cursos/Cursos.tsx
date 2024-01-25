@@ -1,6 +1,6 @@
 import {useState, useEffect, useCallback} from 'react';
 import {AreaView, Header, TextInputSearch} from '~/components';
-import {CardCursos} from './Components';
+import {CardCursos, ModalFilter} from './Components';
 import {
   Container,
   ContainerScroll,
@@ -22,6 +22,8 @@ export function Cursos() {
   const [cursos, setCursos] = useState<ICurso[]>([]);
   const [efetuaBusca, setEfetuaBusca] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const [textoBusca, setTextoBusca] = useState<string>('');
+  const [onOpenModalFilter, setOpenModalFilter] = useState<boolean>(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -75,8 +77,6 @@ export function Cursos() {
     });
   }
 
-  console.log('[cursos]', cursos);
-
   const array = [
     {
       id: 1,
@@ -109,17 +109,44 @@ export function Cursos() {
     },
   ];
 
+  function onFilterListCursos() {
+    setLoading(true);
+    if (textoBusca) {
+      CursoService.getCursosPorDescricao(textoBusca)
+        .then(response => {
+          setCursos(response);
+        })
+        .finally(() => {
+          setTextoBusca('');
+          setLoading(false);
+        });
+    } else {
+      CursoService.getCursos()
+        .then(response => {
+          setCursos(response);
+        })
+        .finally(() => {
+          setTextoBusca('');
+          setLoading(false);
+        });
+    }
+  }
+
+  function onCloseModalFilter() {
+    setOpenModalFilter(false);
+  }
+
   return (
     <>
       <AreaView>
         <Header title="Cursos"></Header>
         <Container>
           <TextInputSearch
-            rightIcon={''}
-            onPressRightIcon={() => {}}
-            value={''}
-            onChangeText={value => {}}
-            onSubmitEditing={() => {}}
+            rightIcon={'tune'}
+            onPressRightIcon={() => setOpenModalFilter(true)}
+            value={textoBusca || ''}
+            onChangeText={value => setTextoBusca(value)}
+            onSubmitEditing={onFilterListCursos}
             placeholderText="Buscar cursos"
           />
           <ContainerScroll>
@@ -158,6 +185,7 @@ export function Cursos() {
           )}
         </ContainerScrollBottom>
       </AreaView>
+      {onOpenModalFilter && <ModalFilter onCloseModal={onCloseModalFilter} />}
     </>
   );
 }

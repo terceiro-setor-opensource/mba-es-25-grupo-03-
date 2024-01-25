@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { Text, Image } from 'react-native';
-import { Icon } from '~/components';
+import { Icon, IconButton } from '~/components';
+import { heightPercentageToDP } from '~/utils';
 
 interface ItemCursoProps {
 	color?: string;
@@ -75,4 +76,100 @@ export const ImageAvatar = styled.Image`
 	width: 200px;
     height: 200px;
     resize: horizontal;
+`;
+
+
+export const Container = styled.View`
+	height: ${heightPercentageToDP(70)}px;
+	padding: 5px 10px;
+	background-color: ${({ theme }) => theme.colors.cinzaCard};
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+`;
+
+export const HeaderClose = styled.View`
+	align-items: flex-end;
+	justify-content: center;
+`;
+
+export const Close = styled(IconButton).attrs(({ theme }) => ({
+	colorIcon: theme.colors.cinza2,
+}))``;
+
+export const Content = styled.View`
+	flex: 1;
+	/* align-items: center; */
+`;
+
+export const ContainerCategorias = styled.View`
+	flex-direction: row;
+	align-items: center;
+`;
+
+export const ContainerClassificacao = styled.View`
+	flex-direction: row;
+	align-items: center;
+`;
+
+export const TextClassificacao = styled.Text`
+	margin-left: 5px;
+	color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+    margin-top: 20px;
+	font-size: 16px;
+`;
+
+
+export const TextCategorias = styled.Text`
+	margin-left: 5px;
+	color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+    margin-top: 20px;
+	font-size: 16px;
+`;
+
+interface OptionCategoriasProps {
+	selected?: boolean;
+	color?: string;
+}
+
+export const OptionCategorias = styled.TouchableOpacity<OptionCategoriasProps>`
+	padding: 8px 20px 8px 20px;
+	background-color: ${props => props.theme.colors.texto1};
+	height: 35px;
+	border-radius: 10px;
+	margin: 6px;
+	align-items: center;
+	justify-content: center;
+
+	${props =>
+		props.selected &&
+		css`
+			background-color: ${props.color || props.theme.colors.button};
+		`}
+`;
+
+export const OptionCategoriasText = styled.Text<OptionCategoriasProps>`
+	font-size: 12px;
+	color: ${props => props.theme.colors.branco};
+
+	${props =>
+		props.selected &&
+		css`
+			color: ${props.theme.colors.light};
+		`}
+`;
+
+export const OptionCategoriasContainer = styled.View`
+	flex-direction: row;
+	flex-wrap: wrap;
+	padding: 10px;
+`;
+
+export const TextoFilter = styled(Text)`
+    color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+	font-size: 20px;
+	margin-top: 10px;
+	text-align: center;
 `;

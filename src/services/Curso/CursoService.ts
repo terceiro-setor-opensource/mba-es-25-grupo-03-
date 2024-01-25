@@ -13,6 +13,21 @@ class CursoService {
                 });
         });
     }
+
+    getCursosPorDescricao(descricao: string): Promise<ICurso[]> {
+        return new Promise((resolve, reject) => {
+            if (!descricao)
+                reject();
+
+            getAPI(`/api/Curso?descricao=${descricao}`)
+                .then((response) => {
+                    resolve(response.data as ICurso[]);
+                })
+                .catch(() => {
+                    reject();
+                });
+        });
+    }
 }
 
 export default new CursoService();

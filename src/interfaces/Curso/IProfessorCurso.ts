@@ -1,3 +1,3 @@
-export default interface ICategoria {
+export default interface IProfessorCurso {
     nome: string;
 }

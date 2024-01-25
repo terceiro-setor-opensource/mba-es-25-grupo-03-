@@ -1,6 +1,6 @@
 import React, {useState, useEffect, forwardRef, ReactElement} from 'react';
 import {TextInput, InputProps} from '~/components/Input';
-/* import { useDebounce } from '~/hooks'; */
+import {useDebounce} from '~/hooks';
 
 interface TextInputProps extends InputProps {
   delaySearch?: number;
@@ -18,14 +18,14 @@ export const TextInputSearch = forwardRef<ReactElement, TextInputProps>(
     } = props;
 
     const [displayValue, setDisplayValue] = useState(value);
-    /* const debouncedChange = useDebounce(onChangeText, delaySearch); */
+    const debouncedChange = useDebounce(onChangeText, delaySearch);
 
     useEffect(() => {
       setDisplayValue(value);
     }, [value]);
 
     function handleChange(newValue: string) {
-      /* debouncedChange(newValue); */
+      debouncedChange(newValue);
       setDisplayValue(newValue);
     }
 
