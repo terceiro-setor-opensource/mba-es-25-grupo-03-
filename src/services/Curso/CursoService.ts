@@ -1,5 +1,5 @@
 import { getAPI } from '~/services';
-import { ICurso } from '~/interfaces';
+import { ICurso, ICursoFilter } from '~/interfaces';
 
 class CursoService {
     getCursos(): Promise<ICurso[]> {
@@ -28,6 +28,37 @@ class CursoService {
                 });
         });
     }
+
+    getCursoPorFiltro(filtros: ICursoFilter): Promise<ICurso[]> {
+        return new Promise((resolve, reject) => {
+            if (!filtros)
+                reject();
+
+            getAPI(`/api/Curso${onCreateUrlFilter(filtros)}`)
+                .then((response) => {
+
+                    resolve(response.data as ICurso[]);
+                })
+                .catch(() => {
+                    reject();
+                });
+        });
+    }
+
 }
 
 export default new CursoService();
+
+function onCreateUrlFilter(filtros: ICursoFilter) {
+    let filter = '?'
+
+    if (filtros?.categorias && filtros?.categorias?.length > 0) {
+        filter = filter + `categorias=${filtros.categorias.join(',')}${filtros.ratingMin ? '&' : ''}`
+    }
+
+    if (filtros.ratingMin) {
+        filter = filter + `ratingMin=${filtros.ratingMin}&ratingMax=${filtros.ratingMax}`
+    }
+
+    return filter;
+}

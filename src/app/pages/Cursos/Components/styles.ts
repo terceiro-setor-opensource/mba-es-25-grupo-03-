@@ -80,7 +80,7 @@ export const ImageAvatar = styled.Image`
 
 
 export const Container = styled.View`
-	height: ${heightPercentageToDP(70)}px;
+	height: ${heightPercentageToDP(80)}px;
 	padding: 5px 10px;
 	background-color: ${({ theme }) => theme.colors.cinzaCard};
 	border-top-left-radius: 15px;
@@ -111,7 +111,33 @@ export const ContainerClassificacao = styled.View`
 	align-items: center;
 `;
 
+export const ContainerDuracao = styled.View`
+	flex-direction: row;
+	align-items: center;
+`;
+
+export const ContainerSlider = styled.View`
+	flex: 1;
+	justify-content: center;
+	align-items: center;
+`;
+
+export const ContainerBotoes = styled.View`
+	flex-direction: row;
+	justify-content: center;
+	margin-top: 20px;
+`;
+
+
 export const TextClassificacao = styled.Text`
+	margin-left: 5px;
+	color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+    margin-top: 20px;
+	font-size: 16px;
+`;
+
+export const TextDuracao = styled.Text`
 	margin-left: 5px;
 	color: ${({ theme }) => theme.colors.light};
 	font-family: ${({ theme }) => theme.fonts.bold};
@@ -173,3 +199,49 @@ export const TextoFilter = styled(Text)`
 	margin-top: 10px;
 	text-align: center;
 `;
+
+export const ButtonApplyFilters = styled.TouchableOpacity`
+	background-color: ${({ theme }) => theme.colors.button};
+	height: 50px;
+	border-radius: 10px;
+	margin: 6px;
+	align-items: center;
+	justify-content: center;
+	width: 250px;
+`;
+
+export const ButtonCleanFilters = styled.TouchableOpacity`
+	background-color: ${({ theme }) => theme.colors.texto1};
+	height: 50px;
+	border-radius: 10px;
+	margin: 6px;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+`;
+
+export const TextoApplyFilter = styled(Text)`
+    color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+	font-size: 14px;
+	margin-top: 10px;
+	text-align: center;
+`;
+
+export const TextCleanFilter = styled(Text)`
+    color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+	font-size: 14px;
+	margin-top: 10px;
+	text-align: center;
+`;
+
+export const TextSlider = styled(Text)`
+    color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+	font-size: 14px;
+	margin-top: 20px;
+	text-align: center;
+
+`;
+

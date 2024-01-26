@@ -13,7 +13,7 @@ import {
 } from './styles';
 import {FlatList} from 'react-native-gesture-handler';
 import CursoService from '~/services/Curso/CursoService';
-import {ICurso} from '~/interfaces';
+import {ICurso, ICursoFilter} from '~/interfaces';
 import {Loading} from '~/components';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -24,6 +24,7 @@ export function Cursos() {
   const [loading, setLoading] = useState<boolean>(false);
   const [textoBusca, setTextoBusca] = useState<string>('');
   const [onOpenModalFilter, setOpenModalFilter] = useState<boolean>(false);
+  const [filter, setFilter] = useState<ICursoFilter>({} as ICursoFilter);
 
   useFocusEffect(
     useCallback(() => {
@@ -75,6 +76,19 @@ export function Cursos() {
         selected: item.id === id ? true : false,
       }));
     });
+
+    //1 = todos
+    if (id === 1) {
+      setLoading(true);
+
+      CursoService.getCursos()
+        .then(response => {
+          setCursos(response);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   }
 
   const array = [
@@ -136,6 +150,17 @@ export function Cursos() {
     setOpenModalFilter(false);
   }
 
+  function onSearchFilter(filters: ICursoFilter) {
+    setLoading(true);
+    CursoService.getCursoPorFiltro(filters)
+      .then(response => {
+        setCursos(response);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
   return (
     <>
       <AreaView>
@@ -185,7 +210,12 @@ export function Cursos() {
           )}
         </ContainerScrollBottom>
       </AreaView>
-      {onOpenModalFilter && <ModalFilter onCloseModal={onCloseModalFilter} />}
+      {onOpenModalFilter && (
+        <ModalFilter
+          onCloseModal={onCloseModalFilter}
+          onApplyFilter={(value: ICursoFilter) => onSearchFilter(value)}
+        />
+      )}
     </>
   );
 }
