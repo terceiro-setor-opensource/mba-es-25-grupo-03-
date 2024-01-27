@@ -25,7 +25,7 @@ export function Notificacoes() {
 
   const renderScene = useCallback(
     ({route}: any) => {
-      if (route.key === 1) {
+      if (tabValue === 0) {
         return <Mensagens />;
       }
 

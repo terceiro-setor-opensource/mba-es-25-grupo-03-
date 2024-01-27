@@ -6,9 +6,11 @@ export default interface ICurso {
     informacoes: string;
     obrigatorio: boolean;
     duracaoMinutos: number;
+    duracaoFormatada: string;
     classificacao: number;
     dataCriacao: Date;
     avatar: string;
     categoria: ICategoria;
     usuario: IProfessorCurso
+
 }

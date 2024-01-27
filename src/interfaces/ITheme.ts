@@ -22,6 +22,7 @@ export interface ITheme {
         cinza5: string;
         laranja: string;
         azulCiano: string;
+        cinza6: string;
     };
     fonts: {
         regular: string;

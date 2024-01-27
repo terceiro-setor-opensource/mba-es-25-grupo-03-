@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import { Icon } from '~/components';
 
 interface ItemCursoProps {
-    color?: string;
+	color?: string;
 }
 
 
@@ -61,6 +61,7 @@ margin: 10px;
 
 export const ContainerCard = styled.View`
 	flex: 1;
+	
 `;
 
 export const ContainerProfessor = styled.View`
@@ -84,6 +85,14 @@ export const TextNotificacao = styled.Text`
 	font-size: 12px;
 `;
 
+export const TextHoras = styled.Text`
+	margin-left: 5px;
+	color: ${({ theme }) => theme.colors.cinza5};
+	font-family: ${({ theme }) => theme.fonts.bold};
+    margin-top: 5px;
+	font-size: 12px;
+`;
+
 export const TextHorasVerticalInside = styled(Text)`
     color: ${({ theme }) => theme.colors.laranja};
 	font-family: ${({ theme }) => theme.fonts.bold};
@@ -93,6 +102,13 @@ export const TextHorasVerticalInside = styled(Text)`
 	right: 0;
 	margin: 10px;
 `;
+
+export const IconeNotificacao = styled(Icon)`
+   color: ${({ theme }) => theme.colors.cinza5};
+   margin-left: 5px;
+
+`;
+
 
 
 

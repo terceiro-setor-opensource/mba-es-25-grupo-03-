@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {FlatList} from 'react-native-gesture-handler';
 import {
   ItemCursoVertical,
@@ -9,49 +9,32 @@ import {
   ItemNotificacao,
   ItemNotificacaoIcon,
   LoadingContainer,
+  IconeNotificacao,
+  TextHoras,
 } from './styles';
 import {Loading} from '~/components';
+import NotificacaoService from '~/services/Notificacao/NotificacaoService';
+import {useAuth} from '~/app/hooks';
+import {IGetNotificacao} from '~/interfaces';
+import {formataDataHora} from '~/utils';
 
 export function NotificacoesApp() {
-  const [array, setArray] = useState<any>([]);
+  const [listNotificacoes, setListNotificacoes] = useState<IGetNotificacao[]>(
+    [],
+  );
   const [loading, setLoading] = useState<boolean>(true);
+  const {usuario} = useAuth();
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    const arr = [
-      {
-        id: 1,
-        hora: '02:30 pm',
-        mensagem: 'Inscrição concluída no curso de C# Avançado',
-        color: '#FD2F2F',
-        icon: 'sell',
-      },
-      {
-        id: 2,
-        hora: '03:30 pm',
-        mensagem: 'Curso de VB atualizado com novas aulas',
-        color: '#FF6905',
-        icon: 'group',
-      },
-      {
-        id: 3,
-        hora: '09:30 pm',
-        mensagem: 'Parabéns por completa o curso Reflection com C#',
-        color: '#3D5CFF',
-        icon: 'chat',
-      },
-      {
-        id: 4,
-        hora: '08:30 am',
-        mensagem: 'Curso de SQL Avaçado atualizado',
-        color: '#FF6905',
-        icon: 'chat',
-      },
-    ];
+    setLoading(true);
 
-    setArray(arr);
+    NotificacaoService.getNotificacoes(Number(usuario.unique_name))
+      .then(response => {
+        setListNotificacoes(response);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -62,23 +45,32 @@ export function NotificacoesApp() {
         </LoadingContainer>
       ) : (
         <FlatList
-          data={array}
+          data={listNotificacoes}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
             <>
-              <ItemCursoVertical disabled>
+              <ItemCursoVertical disabled={item.lida}>
                 <RowFlatList>
                   <ItemNotificacao>
                     <ItemNotificacaoIcon
-                      name={item.icon}
+                      name={item.icone}
                       size={30}
-                      color={item.color}
+                      color={item.cor}
                     />
                   </ItemNotificacao>
                   <ContainerCard>
                     <ContainerProfessor>
-                      <TextNotificacao>{item.mensagem}</TextNotificacao>
+                      <TextNotificacao>{item.notificacao}</TextNotificacao>
                     </ContainerProfessor>
+                    <ContainerCard>
+                      <ContainerProfessor>
+                        <IconeNotificacao name="schedule" size={20} />
+
+                        <TextHoras>
+                          {formataDataHora(item.dataCriacao)}
+                        </TextHoras>
+                      </ContainerProfessor>
+                    </ContainerCard>
                   </ContainerCard>
                 </RowFlatList>
               </ItemCursoVertical>

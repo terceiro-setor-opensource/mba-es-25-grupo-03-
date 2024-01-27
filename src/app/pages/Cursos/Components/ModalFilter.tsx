@@ -138,7 +138,7 @@ function ModalFilter({onCloseModal, onApplyFilter}: ModalFilterProps) {
               <TextSlider>{sliderValue && +sliderValue.toFixed(3)}</TextSlider>
               <ContainerSlider>
                 <Slider
-                  style={{width: 400, height: 60}}
+                  style={{width: 300, height: 60}}
                   value={sliderValue}
                   minimumValue={0}
                   maximumValue={5}

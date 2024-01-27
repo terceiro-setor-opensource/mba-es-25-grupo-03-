@@ -10,7 +10,6 @@ interface ItemCursoProps {
 export const ItemCursoVertical = styled.TouchableOpacity<ItemCursoProps>`
 	padding: 5px;
 	background-color: ${props => props.color ? props.color : props.theme.colors.cinzaCard};
-	height: 120px;
 	border-radius: 15px;
 	margin: 10px;
 	margin-top: 10px;
@@ -37,7 +36,7 @@ export const TextCursoVerticalInside = styled(Text)`
 
 export const RowFlatList = styled.View`
 	flex-direction: row;
-	margin: 0 10px;
+	
 `;
 
 export const TextHorasVerticalInside = styled(Text)`
@@ -45,13 +44,20 @@ export const TextHorasVerticalInside = styled(Text)`
 	font-family: ${({ theme }) => theme.fonts.bold};
 	font-size: 12px;
 	position: absolute;
-	bottom: 0;
+	bottom: -15px;
 	right: 0;
 	margin: 10px;
 `;
 
 export const ContainerCard = styled.View`
-	flex: 1;
+	
+/* 	borderWidth: 1;
+    borderColor: '#ccc';
+    borderRadius: 8; */
+    padding: 16pc;
+    /* margin: 8px; */
+	max-width: 180px;
+	
 `;
 
 export const IconeProfessor = styled(Icon)`
@@ -80,7 +86,7 @@ export const ImageAvatar = styled.Image`
 
 
 export const Container = styled.View`
-	height: ${heightPercentageToDP(80)}px;
+	height: ${heightPercentageToDP(70)}px;
 	padding: 5px 10px;
 	background-color: ${({ theme }) => theme.colors.cinzaCard};
 	border-top-left-radius: 15px;
@@ -118,6 +124,7 @@ export const ContainerDuracao = styled.View`
 
 export const ContainerSlider = styled.View`
 	flex: 1;
+	
 	justify-content: center;
 	align-items: center;
 `;
@@ -126,6 +133,7 @@ export const ContainerBotoes = styled.View`
 	flex-direction: row;
 	justify-content: center;
 	margin-top: 20px;
+	
 `;
 
 
@@ -217,7 +225,7 @@ export const ButtonCleanFilters = styled.TouchableOpacity`
 	margin: 6px;
 	align-items: center;
 	justify-content: center;
-	width: 100px;
+	width: 80px;
 `;
 
 export const TextoApplyFilter = styled(Text)`
@@ -244,4 +252,116 @@ export const TextSlider = styled(Text)`
 	text-align: center;
 
 `;
+
+export const TextoCurso = styled(Text)`
+    color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+	font-size: 16px;
+	margin-top: 10px;
+	text-align: left;
+	margin-left: 10px;
+`;
+
+
+export const DetalhesDuracaoCursoContainer = styled.View`
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 10px;
+`;
+
+export const DetalhesCursoTextoRight = styled(Text)`
+    color: ${({ theme }) => theme.colors.cinza6};
+	font-size: 14px;
+	margin-top: 10px;
+	text-align: right;
+	margin-left: 10px;
+`;
+
+export const DetalhesCursoTextoLeft = styled(Text)`
+    color: ${({ theme }) => theme.colors.cinza6};
+	font-size: 14px;
+	margin-top: 10px;
+	text-align: left;
+	align-items: center;
+`;
+
+export const ContainerSobre = styled.View`
+	flex-direction: column;
+	margin: 10px;
+`;
+
+export const SobreTextTouchableOpacity = styled.TouchableOpacity`
+	height: 200px;
+`;
+
+
+
+interface ItemSobreProps {
+	expanded: boolean;
+}
+
+export const SobreText = styled(Icon) <ItemSobreProps>`
+	
+	background-color: ${props => props.color ? props.color : props.theme.colors.cinzaCard};
+	padding: 10px;
+	border-radius: 8px;
+	overflow: hidden;
+	${props =>
+		props.expanded &&
+		css`
+			height: 200px;
+		`}
+`;
+
+
+export const ContainerAula = styled.TouchableOpacity`
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 60px;
+	
+`;
+
+export const ContainerAulaCentro = styled.View`
+	flex: 1;
+	margin-left: 30px;
+`;
+
+export const TextoAulaLeft = styled.Text`
+	  color: ${({ theme }) => theme.colors.cinza6};
+	font-size: 25px;
+	
+	text-align: left;
+	align-items: center;
+	margin-left: 10px;
+`;
+
+export const ContainerScroll = styled.ScrollView.attrs({
+	contentContainerStyle: { padding: 10 },
+	showsVerticalScrollIndicator: false,
+})` `;
+
+export const TextoAulaCenter = styled.Text`
+	color: ${({ theme }) => theme.colors.light};
+	font-size: 16px;
+`;
+
+export const TextoAulaCenterTime = styled.Text`
+	color: ${({ theme }) => theme.colors.button};
+	font-size: 16px;
+	
+`;
+
+
+export const TextoAulaIconRight = styled(Icon)`
+   color: ${({ theme }) => theme.colors.button};
+   text-align: right;
+   margin-bottom: 15px;
+   margin-right: 10px;
+`;
+
+
+
+
+
 

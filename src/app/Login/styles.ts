@@ -50,9 +50,9 @@ export const TextEntrarStyle = styled(Text)`
 	font-family: ${({ theme }) => theme.fonts.bold};
 	display: flex;
 	align-items: flex-end;
-	padding-right: 240px;
+	
 	font-size: 40px;
-	margin-bottom: 50px;
+	
 `;
 
 

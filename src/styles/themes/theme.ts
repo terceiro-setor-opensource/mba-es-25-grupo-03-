@@ -24,6 +24,7 @@ const theme: ITheme = {
         cinza5: '#C4C4C4',
         laranja: '#FF6905',
         azulCiano: '#D8FFEF',
+        cinza6: '#B8B8D2',
 
     },
     fonts: {

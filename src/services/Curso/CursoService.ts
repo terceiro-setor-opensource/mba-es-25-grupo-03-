@@ -1,5 +1,5 @@
 import { getAPI } from '~/services';
-import { ICurso, ICursoFilter } from '~/interfaces';
+import { ICurso, ICursoFilter, IConteudoCurso } from '~/interfaces';
 
 class CursoService {
     getCursos(): Promise<ICurso[]> {
@@ -38,6 +38,21 @@ class CursoService {
                 .then((response) => {
 
                     resolve(response.data as ICurso[]);
+                })
+                .catch(() => {
+                    reject();
+                });
+        });
+    }
+
+    getConteudoCurso(idCurso: number): Promise<IConteudoCurso[]> {
+        return new Promise((resolve, reject) => {
+            if (!idCurso)
+                reject();
+
+            getAPI(`/api/ConteudoCurso?idCurso=${idCurso}`)
+                .then((response) => {
+                    resolve(response.data as IConteudoCurso[]);
                 })
                 .catch(() => {
                     reject();
