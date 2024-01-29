@@ -11,9 +11,10 @@ import {
   ContainerProfessor,
   TextProfessor,
   ImageAvatar,
+  ContainerScrollBottom,
 } from './styles';
 import {ICurso} from '~/interfaces';
-import {Image} from 'react-native';
+import {Image, View} from 'react-native';
 import {ModalCurso} from './ModalCurso';
 
 interface ICardCursosProps {
@@ -44,9 +45,9 @@ function CardCursos({listCursos}: ICardCursosProps) {
             <ItemCursoVertical onPress={() => onOpenModalCurso(item.id)}>
               <RowFlatList>
                 <ItemCursoVerticalInside>
-                  {/*    <ImageAvatar
-                  source={{uri: `data:image/png:base64, ${item.avatar}`}}
-                /> */}
+                  <ImageAvatar
+                    source={{uri: `data:image/png:base64, ${item.avatar}`}}
+                  />
                 </ItemCursoVerticalInside>
                 <ContainerCard>
                   <TextCursoVerticalInside>

@@ -6,7 +6,7 @@ export interface Response extends AxiosResponse { }
 
 
 export const setBaseAdress = () => {
-	axios.defaults.baseURL = "https://impacta03.autowaresolucoes.com.br";
+	axios.defaults.baseURL = "http://192.168.15.88:36599";
 }
 
 export const getAPI = (url: string, extraparam?: any): Promise<Response> =>
@@ -27,6 +27,7 @@ export const getAPI = (url: string, extraparam?: any): Promise<Response> =>
 export const initApi = () => setBaseAdress();
 
 export const postAPI = (url: string, data?: any, extraparam?: any): Promise<Response> => {
+
 	return new Promise(async (resolve, reject) => {
 		axios
 			.post(url, data, { ...(extraparam || {}), headers: { Authorization: `Bearer ${await getAccessToken()}` } })
@@ -38,6 +39,7 @@ export const postAPI = (url: string, data?: any, extraparam?: any): Promise<Resp
 				}
 			})
 			.catch((error: unknown) => {
+
 				reject(error);
 
 			});

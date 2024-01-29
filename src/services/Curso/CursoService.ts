@@ -60,6 +60,22 @@ class CursoService {
         });
     }
 
+    getCursoPorId(idCurso: number): Promise<ICurso> {
+        return new Promise((resolve, reject) => {
+            if (!idCurso)
+                reject();
+
+            getAPI(`/api/Curso/${idCurso}`)
+                .then((response) => {
+                    resolve(response.data as ICurso);
+                })
+                .catch(() => {
+                    reject();
+                });
+        });
+    }
+
+
 }
 
 export default new CursoService();

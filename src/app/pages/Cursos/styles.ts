@@ -4,18 +4,19 @@ import { Text } from 'react-native';
 export const Container = styled.View`
 	padding: 0 10px;
     background: ${({ theme }) => theme.colors.appBackground};
+	flex: 1;
 `;
 
 export const ContainerScrollBottom = styled.ScrollView.attrs({
 	contentContainerStyle: { padding: 10 },
-	showsVerticalScrollIndicator: false,
+
 })`
  background: ${({ theme }) => theme.colors.appBackground};
 `;
 
 
 export const ContainerScroll = styled.ScrollView.attrs({
-	showsVerticalScrollIndicator: false,
+
 })``;
 
 interface ItemCursoProps {

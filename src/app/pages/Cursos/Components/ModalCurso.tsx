@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useRef} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import RNModal from 'react-native-modal';
 import {
@@ -23,27 +23,36 @@ import {
   TextoAulaCenterTime,
   TextoAulaIconRight,
   ButtonApplyFilters,
+  ContainerBotoes,
+  TextoApplyFilter,
 } from './styles';
 import {Icon} from '~/components';
 import CursoService from '~/services/Curso/CursoService';
 import {Loading} from '~/components';
-import {ICurso, IConteudoCurso} from '~/interfaces';
+import {ICurso, IConteudoCurso, IMatriculaPost} from '~/interfaces';
 import {FlatList} from 'react-native-gesture-handler';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {TouchableOpacity} from 'react-native';
 import {Button, View, Alert, useWindowDimensions} from 'react-native';
+import MatriculaService from '~/services/Curso/MatriculaService';
+import {useAuth} from '~/app/hooks';
+import {showMessage} from '~/utils';
 
 interface ModalCursoProps {
   onCloseModal: () => void;
   curso: ICurso;
+  inscrito?: boolean;
 }
 
-function ModalCurso({onCloseModal, curso}: ModalCursoProps) {
+function ModalCurso({onCloseModal, curso, inscrito}: ModalCursoProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [conteudoCurso, setConteudoCurso] = useState<IConteudoCurso[]>([]);
   const [expanded, setExpanded] = useState<boolean>(false);
   const [onPlayVideo, setOnPlayVideo] = useState<boolean>(false);
+  const [loadingMatricula, setLoadingMatricula] = useState<boolean>(false);
   const {width} = useWindowDimensions();
+  const {usuario} = useAuth();
+  const videoCurrent = useRef<string>('');
 
   useFocusEffect(
     useCallback(() => {
@@ -67,14 +76,36 @@ function ModalCurso({onCloseModal, curso}: ModalCursoProps) {
     setExpanded(!expanded);
   };
 
-  console.log('onPlayVideo', onPlayVideo);
-
   const onStateChange = useCallback((state: any) => {
     if (state === 'ended') {
       setOnPlayVideo(false);
+      videoCurrent.current = '';
       Alert.alert('video has finished playing!');
     }
+    videoCurrent.current = '';
   }, []);
+
+  function onAddMatricula(idCurso: number) {
+    if (!idCurso) return;
+
+    setLoadingMatricula(true);
+
+    const objMatricula: IMatriculaPost = {
+      idCurso: idCurso,
+      idUsuario: Number(usuario.unique_name),
+    };
+
+    MatriculaService.postMatricula(objMatricula).finally(() => {
+      setLoadingMatricula(false);
+
+      showMessage({
+        type: 'success',
+        description: 'Matricula efetuada com sucesso !',
+      });
+
+      onCloseModal();
+    });
+  }
 
   return (
     <>
@@ -100,7 +131,7 @@ function ModalCurso({onCloseModal, curso}: ModalCursoProps) {
                   height={500}
                   width={width}
                   play={onPlayVideo}
-                  videoId={'IRhK-W84POo'}
+                  videoId={'KXJeXuDVPzQ'}
                   onChangeState={onStateChange}
                 />
               </View>
@@ -123,7 +154,7 @@ function ModalCurso({onCloseModal, curso}: ModalCursoProps) {
 
                     <DetalhesCursoTextoLeft>
                       {/*   <IconeProfessor name="person" size={20} /> */}
-                      {curso.usuario.nome}
+                      {curso.usuario?.nome}
                     </DetalhesCursoTextoLeft>
                   </DetalhesDuracaoCursoContainer>
                   <TextoCurso>Sobre o curso</TextoCurso>
@@ -157,12 +188,38 @@ function ModalCurso({onCloseModal, curso}: ModalCursoProps) {
                             {item.duracaoFormatada}
                           </TextoAulaCenterTime>
                         </ContainerAulaCentro>
-                        <TouchableOpacity onPress={() => setOnPlayVideo(true)}>
-                          <TextoAulaIconRight name="play" size={30} />
-                        </TouchableOpacity>
+                        {curso.id === 1 && (item.id === 1 || item.id === 2) ? (
+                          <TouchableOpacity onPress={() => {}}>
+                            <TextoAulaIconRight name="done" size={30} />
+                          </TouchableOpacity>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() => {
+                              videoCurrent.current = item.urlVideo;
+                              setOnPlayVideo(true);
+                            }}>
+                            <TextoAulaIconRight name="play" size={30} />
+                          </TouchableOpacity>
+                        )}
                       </ContainerAula>
                     )}
                   />
+                  {!inscrito ? (
+                    <ContainerBotoes>
+                      <ButtonApplyFilters
+                        onPress={() => onAddMatricula(curso.id)}
+                        disabled={loadingMatricula}>
+                        {loadingMatricula ? (
+                          <Loading size="small" />
+                        ) : (
+                          <TextoApplyFilter>Inscrever-se</TextoApplyFilter>
+                        )}
+                      </ButtonApplyFilters>
+                    </ContainerBotoes>
+                  ) : (
+                    <></>
+                  )}
+
                   {/*  </ContainerScroll> */}
                 </>
               )}

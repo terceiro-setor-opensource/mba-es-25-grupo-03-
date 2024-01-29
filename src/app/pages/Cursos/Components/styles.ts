@@ -360,6 +360,13 @@ export const TextoAulaIconRight = styled(Icon)`
    margin-right: 10px;
 `;
 
+export const ContainerScrollBottom = styled.ScrollView.attrs({
+	contentContainerStyle: { padding: 15 },
+
+})`
+ background: ${({ theme }) => theme.colors.appBackground};
+`;
+
 
 
 

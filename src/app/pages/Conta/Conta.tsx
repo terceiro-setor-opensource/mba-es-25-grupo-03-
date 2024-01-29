@@ -32,6 +32,30 @@ export function Conta() {
           <Card>
             <TouchableOpacity>
               <Row>
+                <TextoIcon>Editar</TextoIcon>
+                <IconButton name="chevron-right" size={25} onPress={() => {}} />
+              </Row>
+            </TouchableOpacity>
+          </Card>
+          <Card>
+            <TouchableOpacity>
+              <Row>
+                <TextoIcon>Configurações e privacidade</TextoIcon>
+                <IconButton name="chevron-right" size={25} onPress={() => {}} />
+              </Row>
+            </TouchableOpacity>
+          </Card>
+          <Card>
+            <TouchableOpacity>
+              <Row>
+                <TextoIcon>Ajuda</TextoIcon>
+                <IconButton name="chevron-right" size={25} onPress={() => {}} />
+              </Row>
+            </TouchableOpacity>
+          </Card>
+          <Card>
+            <TouchableOpacity>
+              <Row>
                 <TextoIcon>Sair</TextoIcon>
                 <IconButton
                   name="chevron-right"

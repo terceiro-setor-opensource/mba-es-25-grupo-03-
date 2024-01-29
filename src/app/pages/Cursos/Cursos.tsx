@@ -16,6 +16,8 @@ import CursoService from '~/services/Curso/CursoService';
 import {ICurso, ICursoFilter} from '~/interfaces';
 import {Loading} from '~/components';
 import {useFocusEffect} from '@react-navigation/native';
+import MatriculaService from '~/services/Curso/MatriculaService';
+import {useAuth} from '~/app/hooks';
 
 export function Cursos() {
   const [arrayTextCursos, setArrayTextCursos] = useState<any[]>([]);
@@ -25,18 +27,23 @@ export function Cursos() {
   const [textoBusca, setTextoBusca] = useState<string>('');
   const [onOpenModalFilter, setOpenModalFilter] = useState<boolean>(false);
   const [filter, setFilter] = useState<ICursoFilter>({} as ICursoFilter);
+  const {usuario} = useAuth();
 
   useFocusEffect(
     useCallback(() => {
       setLoading(true);
 
-      CursoService.getCursos()
-        .then(response => {
-          setCursos(response);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      CursoService.getCursos().then(response => {
+        MatriculaService.getMatriculasUsuario(Number(usuario.unique_name))
+          .then(responseMatriculas => {
+            const idsExcluir = responseMatriculas.map(x => x.idCurso);
+
+            setCursos(response.filter(x => !idsExcluir.includes(x.id)));
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      });
     }, []),
   );
 
@@ -81,7 +88,29 @@ export function Cursos() {
     if (id === 1) {
       setLoading(true);
 
-      CursoService.getCursos()
+      CursoService.getCursos().then(response => {
+        MatriculaService.getMatriculasUsuario(Number(usuario.unique_name))
+          .then(responseMatriculas => {
+            const idsExcluir = responseMatriculas.map(x => x.idCurso);
+
+            setCursos(response.filter(x => !idsExcluir.includes(x.id)));
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      });
+    }
+
+    //2 = popular
+    if (id === 2) {
+      setLoading(true);
+
+      const filter: ICursoFilter = {
+        ratingMin: 4,
+        ratingMax: 5,
+      };
+
+      CursoService.getCursoPorFiltro(filter)
         .then(response => {
           setCursos(response);
         })
@@ -89,6 +118,21 @@ export function Cursos() {
           setLoading(false);
         });
     }
+
+    //3 = novos
+    /*  if (id === 3) {
+      setLoading(true);
+
+      setTimeout(() => {
+        setCursos(prevState =>
+          prevState.filter(
+            x =>
+              isNaN(x.dataCriacao.getTime()) <= isNaN(new Date(-20).getTime()),
+          ),
+        );
+        setLoading(false);
+      }, 1000);
+    } */
   }
 
   const array = [
@@ -126,23 +170,31 @@ export function Cursos() {
   function onFilterListCursos() {
     setLoading(true);
     if (textoBusca) {
-      CursoService.getCursosPorDescricao(textoBusca)
-        .then(response => {
-          setCursos(response);
-        })
-        .finally(() => {
-          setTextoBusca('');
-          setLoading(false);
-        });
+      CursoService.getCursosPorDescricao(textoBusca).then(response => {
+        MatriculaService.getMatriculasUsuario(Number(usuario.unique_name))
+          .then(responseMatriculas => {
+            const idsExcluir = responseMatriculas.map(x => x.idCurso);
+
+            setCursos(response.filter(x => !idsExcluir.includes(x.id)));
+          })
+          .finally(() => {
+            setLoading(false);
+            setTextoBusca('');
+          });
+      });
     } else {
-      CursoService.getCursos()
-        .then(response => {
-          setCursos(response);
-        })
-        .finally(() => {
-          setTextoBusca('');
-          setLoading(false);
-        });
+      CursoService.getCursos().then(response => {
+        MatriculaService.getMatriculasUsuario(Number(usuario.unique_name))
+          .then(responseMatriculas => {
+            const idsExcluir = responseMatriculas.map(x => x.idCurso);
+
+            setCursos(response.filter(x => !idsExcluir.includes(x.id)));
+          })
+          .finally(() => {
+            setLoading(false);
+            setTextoBusca('');
+          });
+      });
     }
   }
 
@@ -152,13 +204,17 @@ export function Cursos() {
 
   function onSearchFilter(filters: ICursoFilter) {
     setLoading(true);
-    CursoService.getCursoPorFiltro(filters)
-      .then(response => {
-        setCursos(response);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    CursoService.getCursoPorFiltro(filters).then(response => {
+      MatriculaService.getMatriculasUsuario(Number(usuario.unique_name))
+        .then(responseMatriculas => {
+          const idsExcluir = responseMatriculas.map(x => x.idCurso);
+
+          setCursos(response.filter(x => !idsExcluir.includes(x.id)));
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
   }
 
   return (
@@ -174,7 +230,7 @@ export function Cursos() {
             onSubmitEditing={onFilterListCursos}
             placeholderText="Buscar cursos"
           />
-          <ContainerScroll>
+          {/* <ContainerScroll>
             <FlatList
               data={array}
               keyExtractor={item => String(item.id)}
@@ -185,7 +241,7 @@ export function Cursos() {
               )}
               horizontal
             />
-          </ContainerScroll>
+          </ContainerScroll> */}
 
           <TextCurso>Escolha seu curso</TextCurso>
           <ContainerCursosOpcoes>
@@ -201,14 +257,12 @@ export function Cursos() {
                 </CursosOpcoes>
               ))}
           </ContainerCursosOpcoes>
-        </Container>
-        <ContainerScrollBottom>
           {loading ? (
             <Loading size="large" />
           ) : (
             <CardCursos listCursos={cursos} />
           )}
-        </ContainerScrollBottom>
+        </Container>
       </AreaView>
       {onOpenModalFilter && (
         <ModalFilter

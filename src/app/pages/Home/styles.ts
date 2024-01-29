@@ -133,10 +133,52 @@ export const TextFind = styled(Text)`
     color: ${({ theme }) => theme.colors.light};
 	font-size: 20px;
 	margin-top: 10px;
-	flex: 1;
+	/* flex: 1; */
 	margin-left: 10px;
 	
 `;
+
+
+export const CardMatricula = styled.View`
+ background-color: ${({ theme }) => theme.colors.cinzaCard};
+ /* padding: 20px; */
+ margin: 10px;
+ border-radius: 10px;
+ flex-direction: row;
+ justify-content: space-between;
+`;
+
+export const TextMatriculaCurso = styled.Text`
+    /*  margin-left: 10px; */
+	margin-top: 4px;
+	color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+	font-size: 12px;
+	flex-wrap: wrap;
+`;
+
+export const TextMatriculaCarga = styled.Text`
+     margin-left: 10px;
+	margin-top: 4px;
+	color: ${({ theme }) => theme.colors.light};
+	font-family: ${({ theme }) => theme.fonts.bold};
+	font-size: 14px;
+	
+`;
+
+interface ItemCursoProps {
+	color?: string;
+}
+
+export const ItemCursoVertical = styled.TouchableOpacity<ItemCursoProps>`
+	padding: 5px;
+	background-color: ${props => props.color ? props.color : props.theme.colors.cinzaCard};
+	border-radius: 15px;
+	margin: 10px;
+	margin-top: 10px;
+	
+`;
+
 
 
 

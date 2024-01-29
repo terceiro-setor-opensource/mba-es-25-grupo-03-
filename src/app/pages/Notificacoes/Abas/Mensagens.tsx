@@ -34,21 +34,20 @@ export function Mensagens() {
         id: 2,
         hora: '03:30 pm',
         mensagem:
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+          'Até o final da semana estarei liberando novas aulas para o curso de C#',
         pessoa: 'Leonardo Lima',
       },
       {
         id: 3,
         hora: '09:30 pm',
-        mensagem:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',
+        mensagem: 'Problema ao instalar o visual studio 2022',
         pessoa: 'Marcio Dias',
       },
       {
         id: 4,
         hora: '08:30 am',
         mensagem:
-          'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.',
+          'Favor finalizar a aula #7 do curso de C# até a próxima sexta-feira',
         pessoa: 'Eliana Corvalan',
       },
     ];
